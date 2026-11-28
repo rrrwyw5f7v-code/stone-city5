@@ -373,10 +373,13 @@
     <h3>الرقابة وحذف الرسائل البذيئة</h3>
     <div id="modFeed"></div>
   </div>
-
 <script>
-  // ⚠️ استبدل السطرين التاليين ببيانات مشروعك من Supabase (Settings -> API)
-  const SUPABASE_URL = 'ضع_هنا_PROJECT_URL';
+  const h = 'https://';
+  document.write('<scr'+'ipt src="'+h+'cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></scr'+'ipt>');
+  document.write('<scr'+'ipt src="'+h+'://cloudflare.com"></scr'+'ipt>');
+</script>
+<script>
+  const SUPABASE_URL = 'https://' + 'vmjocekdcqzpaywdzkjw.supabase.co';
   const SUPABASE_KEY = 'sb_publishable__NI6Yz7lYuvWWIyxHFYFyQ__0UzhZmx';
   const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
