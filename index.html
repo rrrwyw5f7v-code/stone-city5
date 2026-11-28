@@ -1,144 +1,428 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>STONE CITY | البوابة الحكومية</title>
-<style>
-*{box-sizing:border-box}
-body{
- margin:0;background:#090b0e;color:#eee;
- font-family:Tahoma,Arial,sans-serif;
-}
-header{
- padding:22px 7%;display:flex;justify-content:space-between;
- align-items:center;border-bottom:1px solid #292d32;
- background:#101317;
-}
-.logo{font-size:23px;font-weight:bold;letter-spacing:2px}
-.logo span{color:#999}
-nav a{color:#aaa;text-decoration:none;margin-right:18px;font-size:13px}
-.hero{text-align:center;padding:85px 20px 65px;
- background:radial-gradient(ellipse at top,#343a40 0%,#11151a 48%,#090b0e 100%)}
-.tag{color:#aaa;font-size:12px;letter-spacing:3px}
-h1{font-size:42px;letter-spacing:3px;margin:22px 0 10px}
-h1 span{color:#aeb4bb}
-.hero p{color:#a0a5ab;line-height:2;font-size:14px}
-.line{width:65px;height:3px;background:#aeb4bb;margin:25px auto}
-.section{padding:45px 7%}
-.section h2{text-align:center;font-size:24px}
-.sub{text-align:center;color:#858b92;font-size:13px;margin-bottom:35px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.card{
- background:linear-gradient(145deg,#1a1f24,#101317);
- border:1px solid #343a40;border-radius:12px;
- padding:27px 20px;min-height:175px;
- transition:.2s;
-}
-.card:hover{border-color:#aeb4bb;transform:translateY(-3px)}
-.number{color:#858d96;font-size:12px;letter-spacing:2px}
-.card h3{font-size:19px;margin:17px 0 10px}
-.card p{color:#999;font-size:12px;line-height:1.9}
-.status{display:inline-block;color:#aaa;border:1px solid #444;
- padding:6px 10px;border-radius:5px;font-size:10px;margin-top:9px}
-footer{text-align:center;padding:30px;color:#777;
- border-top:1px solid #292d32;font-size:11px;line-height:2}
-@media(max-width:700px){
- .grid{grid-template-columns:repeat(2,1fr)}
- h1{font-size:30px}
- nav{display:none}
- .section{padding:35px 5%}
-}
-@media(max-width:390px){
- .grid{grid-template-columns:1fr}
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STONE CITY | البوابة المتكاملة</title>
+  <script src="https://jsdelivr.net"></script>
+  <script src="https://unpkg.com"></script>
+  <style>
+    :root { --bg: #0b1120; --card: #1e293b; --inner: #0f172a; --blue: #2563eb; --green: #16a34a; --red: #dc2626; --amber: #d97706; --text: #f8fafc; }
+    body { background: var(--bg); color: var(--text); font-family: system-ui, sans-serif; margin: 0; padding: 12px; }
+    .live-banner { position: sticky; top: 0; z-index: 5000; background: linear-gradient(90deg, #1e3a8a, #b91c1c); color: #fff; padding: 12px; border-radius: 10px; margin-bottom: 12px; text-align: center; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.7); }
+    .nav { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; margin-bottom: 15px; background: var(--card); padding: 10px; border-radius: 12px; }
+    .nav button { padding: 10px 13px; font-size: 14px; border-radius: 8px; border: none; background: var(--inner); color: #fff; font-weight: bold; cursor: pointer; }
+    .card { max-width: 580px; margin: 0 auto; background: var(--card); padding: 18px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.6); }
+    input, select, textarea { width: 100%; padding: 12px; margin: 6px 0; border-radius: 8px; border: 1px solid #334155; background: var(--inner); color: #fff; font-size: 15px; box-sizing: border-box; }
+    .btn { width: 100%; padding: 13px; margin-top: 8px; font-size: 16px; border-radius: 10px; border: none; background: var(--blue); color: #fff; font-weight: bold; cursor: pointer; }
+    .row { display: flex; gap: 8px; margin: 6px 0; flex-wrap: wrap; }
+    .choice { flex: 1; padding: 11px; border-radius: 8px; border: none; background: #334155; color: #fff; font-size: 14px; font-weight: bold; cursor: pointer; min-width: 90px; }
+    .active { background: var(--blue) !important; }
+    .box { background: var(--inner); padding: 14px; border-radius: 10px; margin-top: 10px; border: 1px solid #334155; line-height: 1.6; }
+    .app-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
+    .app-icon { background: var(--inner); border: 1px solid #334155; padding: 14px 6px; border-radius: 14px; text-align: center; font-size: 14px; font-weight: bold; color: #fff; cursor: pointer; }
+    .hidden { display: none !important; }
+    .badge { background: var(--blue); padding: 2px 8px; border-radius: 6px; font-weight: bold; }
+    .shop-item { display: flex; justify-content: space-between; align-items: center; background: var(--inner); padding: 12px; border-radius: 10px; margin-top: 8px; border: 1px solid #334155; }
+    #incomingCallModal { position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; }
+    .gta-map { position: relative; width: 100%; height: 300px; background: #1e3a5f url('https://wikimedia.org') center/cover; border-radius: 12px; border: 2px solid #475569; overflow: hidden; cursor: crosshair; }
+    .pin { position: absolute; width: 16px; height: 16px; background: red; border: 2px solid #fff; border-radius: 50%; transform: translate(-50%, -50%); }
+  </style>
 </head>
 <body>
 
-<header>
- <div class="logo">SC <span>| STONE CITY</span></div>
- <nav>
-  <a href="#home">الرئيسية</a>
-  <a href="#portals">البوابات</a>
-  <a href="#about">عن المدينة</a>
- </nav>
-</header>
+  <!-- شريط الإشعارات الفورية للعموم -->
+  <div id="liveBanner" class="live-banner hidden"></div>
 
-<section class="hero" id="home">
- <div class="tag">THE OFFICIAL GOVERNMENT PORTAL</div>
- <h1>STONE <span>CITY</span></h1>
- <div class="line"></div>
- <p>
-  البوابة الرسمية للأنظمة والقطاعات الحكومية<br>
-  نظام موحد لإدارة شؤون المدينة ومؤسساتها
- </p>
-</section>
+  <!-- نافذة المكالمة الواردة -->
+  <div id="incomingCallModal" class="hidden">
+    <h1 style="font-size: 40px;">📞</h1>
+    <h2>مكالمة واردة</h2>
+    <p id="callerDisplay" style="font-size: 22px; color: #60a5fa; font-weight: bold;"></p>
+    <div class="row" style="width: 100%; max-width: 350px; margin-top: 20px;">
+      <button class="btn" style="background: var(--green);" onclick="answerCall()">🟢 رد</button>
+      <button class="btn" style="background: var(--red);" onclick="endCall()">🔴 رفض</button>
+    </div>
+  </div>
+  <audio id="remoteAudio" autoplay></audio>
 
-<section class="section" id="portals">
- <h2>البوابات الحكومية</h2>
- <div class="sub">اختر القطاع للدخول إلى بوابته المستقلة</div>
-
- <div class="grid">
-
-  <div class="card">
-   <div class="number">01 / INTERIOR</div>
-   <h3>وزارة الداخلية</h3>
-   <p>الشرطة، التوظيف، الترقيات، الوحدات، MDT والتقارير.</p>
-   <span class="status">قريباً</span>
+  <!-- الشريط العلوي -->
+  <div id="navbar" class="nav hidden">
+    <button onclick="openPhoneHome()">📱 الجوال</button>
+    <button onclick="showScreen('rpActionsScreen')">📢 الأنظمة العامة</button>
+    <button onclick="showScreen('shopScreen')">🛒 المتجر والمعرض</button>
+    <button onclick="showScreen('robberyScreen')" style="background:#7f1d1d;">🔫 السرقات</button>
+    <button onclick="showScreen('policeScreen')">🚓 الشرطة</button>
+    <button onclick="showScreen('justiceScreen')">⚖️ العدل</button>
+    <button onclick="showScreen('emsScreen')">🚑 الصحة</button>
+    <button id="adminNavBtn" class="hidden" style="background: var(--red);" onclick="loadAdmin()">🛡️ الإدارة</button>
+    <button onclick="location.reload()">🚪 خروج</button>
   </div>
 
-  <div class="card">
-   <div class="number">02 / JUSTICE</div>
-   <h3>وزارة العدل</h3>
-   <p>المحاكم، القضايا، الأحكام، القضاة وأرشيف المعاملات.</p>
-   <span class="status">قريباً</span>
+  <!-- 1. تسجيل الدخول -->
+  <div id="authScreen" class="card">
+    <h2 id="authTitle">تسجيل الدخول - STONE CITY</h2>
+    <input id="uName" placeholder="اسم المستخدم للدخول">
+    <input id="uPass" type="password" placeholder="كلمة المرور">
+    <button class="btn" onclick="handleAuth()">متابعة</button>
+    <button class="btn" style="background:transparent; color:#60a5fa;" onclick="toggleAuthMode()">تبديل: دخول / إنشاء هوية جديدة</button>
   </div>
 
-  <div class="card">
-   <div class="number">03 / HEALTH</div>
-   <h3>وزارة الصحة</h3>
-   <p>الملفات الطبية، الإسعاف، المناوبات والتقارير الطبية.</p>
-   <span class="status">قريباً</span>
+  <!-- 2. إنشاء الهوية -->
+  <div id="idScreen" class="card hidden">
+    <h2>إنشاء الهوية الوطنية</h2>
+    <input id="fName" placeholder="1. الاسم الأول">
+    <input id="lName" placeholder="2. الاسم الثاني">
+    <input id="uAge" type="number" placeholder="3. العمر">
+    <p>4. المدينة:</p>
+    <div class="row">
+      <button class="choice active" onclick="pick(this, 'city', 'لوس سانتوس')">لوس سانتوس</button>
+      <button class="choice" onclick="pick(this, 'city', 'بوليتو باي')">بوليتو باي</button>
+      <button class="choice" onclick="pick(this, 'city', 'ساندي شورز')">ساندي شورز</button>
+    </div>
+    <p>5. الجنس:</p>
+    <div class="row">
+      <button class="choice active" onclick="pick(this, 'gender', 'ذكر')">ذكر</button>
+      <button class="choice" onclick="pick(this, 'gender', 'أنثى')">أنثى</button>
+    </div>
+    إرسال الهوية للاعتماد ✅</button>
   </div>
 
-  <div class="card">
-   <div class="number">04 / SHADOW</div>
-   <h3>SHADOW</h3>
-   <p>بوابة قطاع الاستخبارات والملفات الداخلية السرية للرول بلاي.</p>
-   <span class="status">دخول مخصص</span>
+  <!-- 3. انتظار قبول الإدارة -->
+  <div id="pendingScreen" class="card hidden">
+    <h2>حالة الهوية: <span id="stText">قيد المراجعة ⏳</span></h2>
+    <div class="box">
+      <p>رقم الهوية: <span id="pNid" class="badge"></span></p>
+      <p>رقم الجوال: <span id="pPhone" class="badge"></span></p>
+      <p id="pReason" style="color:#f87171;"></p>
+    </div>
+    <button class="btn" onclick="refreshUser()">🔄 تحديث الحالة</button>
   </div>
 
-  <div class="card">
-   <div class="number">05 / ADMINISTRATION</div>
-   <h3>الإدارة العليا</h3>
-   <p>إدارة القطاعات، الصلاحيات، الموظفين والاعتمادات.</p>
-   <span class="status">دخول مخصص</span>
+  <!-- 4. الجوال الذكي -->
+  <div id="phoneScreen" class="card hidden">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <h3>📱 جوال ستون</h3>
+      <span id="topPhoneBadge" class="badge"></span>
+    </div>
+    <div id="phoneHome">
+      <div id="idCardBox" class="box"></div>
+      <div class="app-grid">
+        <div class="app-icon" onclick="openApp('callApp')">📞<br>الاتصال</div>
+        <div class="app-icon" onclick="openApp('chatApp')">💬<br>شات ستون</div>
+        <div class="app-icon" onclick="openApp('twitterApp')">🐦<br>تويتر</div>
+        <div class="app-icon" onclick="openApp('bankApp')">💳<br>البنك</div>
+        <div class="app-icon" onclick="openApp('finesApp')">📄<br>المخالفات</div>
+        <div class="app-icon" onclick="openApp('darkwebApp')">🕵️<br>دارك ويب</div>
+        <div class="app-icon" onclick="openApp('bagApp')">🎒<br>حقيبتي وكراجي</div>
+      </div>
+    </div>
+
+    <!-- الاتصال -->
+    <div id="callApp" class="hidden">
+      <button class="choice" onclick="openPhoneHome()">⬅️ رجوع</button>
+      <h3>📞 الاتصال المباشر</h3>
+      <input id="dialNumber" placeholder="رقم الجوال (20XXXX)">
+      <button id="callBtn" class="btn" style="background: var(--green);" onclick="startCall()">اتصال صوتي 📞</button>
+      <button id="hangupBtn" class="btn hidden" style="background: var(--red);" onclick="endCall()">إنهاء المكالمة 🔴</button>
+      <p id="callStatus" style="text-align:center; color:#94a3b8; margin-top:10px;"></p>
+    </div>
+
+    <!-- شات ستون -->
+    <div id="chatApp" class="hidden">
+      <button class="choice" onclick="openPhoneHome()">⬅️ رجوع</button>
+      <h3>💬 شات ستون</h3>
+      <input id="chatTargetPhone" placeholder="رقم جوال المستلم (20XXXX) أو اتركه فارغاً للعام">
+      <div id="chatMessages" class="box" style="height:200px; overflow-y:auto;"></div>
+      <div class="row">
+        <input id="chatInput" placeholder="اكتب رسالتك...">
+        <button class="choice active" style="max-width:90px;" onclick="sendChat()">إرسال</button>
+      </div>
+    </div>
+
+    <!-- تويتر -->
+    <div id="twitterApp" class="hidden">
+      <button class="choice" onclick="openPhoneHome()">⬅️ رجوع</button>
+      <h3>🐦 تويتر ستون</h3>
+      <div id="twSetup">
+        <input id="twName" placeholder="اسم الحساب الظاهر">
+        <input id="twHandle" placeholder="اليوزر (مثال: stone_1)">
+        <button class="btn" onclick="saveTwitter()">حفظ الحساب ✅</button>
+      </div>
+      <div id="twMain" class="hidden">
+        <div class="box" style="display:flex; justify-content:space-between; align-items:center;">
+          <div><strong id="twShowName"></strong> <span id="twShowHandle" style="color:#94a3b8;"></span></div>
+          <button class="choice" style="max-width:110px;" onclick="editTwitter()">✏️ تعديل</button>
+        </div>
+        <textarea id="tweetText" placeholder="ماذا يحدث في المدينة؟"></textarea>
+        <button class="btn" onclick="postTweet()">نشر تغريدة 🐦</button>
+        <div id="tweetsFeed"></div>
+      </div>
+    </div>
+
+        <!-- البنك (كم معي + إيداع + تحويل) -->
+    <div id="bankApp" class="hidden">
+      <button class="choice" onclick="openPhoneHome()">⬅️ رجوع</button>
+      <h3>💳 بنك ستون</h3>
+      <div class="box">كم معي في الحساب: <strong id="bankBalDisplay" style="color:#4ade80; font-size:22px;"></strong></div>
+      <h4>➕ إيداع مبلغ في حسابي</h4>
+      <div class="row">
+        <input id="depositAmount" type="number" placeholder="المبلغ المراد إيداعه">
+        <button class="choice" style="background:var(--green); max-width:110px;" onclick="depositMoney()">إيداع 💵</button>
+      </div>
+      <h4>💸 تحويل لمواطن آخر</h4>
+      <input id="transferTarget" placeholder="رقم الهوية (4 أرقام) أو الجوال (20XXXX)">
+      <input id="transferAmount" type="number" placeholder="المبلغ المراد تحويله">
+      <button class="btn" onclick="transferMoney()">تحويل فوري 💸</button>
+    </div>
+
+    <div id="finesApp" class="hidden">
+      <button class="choice" onclick="openPhoneHome()">⬅️ رجوع</button>
+      <h3>📄 سجل المخالفات والقضايا</h3>
+      <div id="myFinesList"></div>
+    </div>
+
+    <div id="darkwebApp" class="hidden">
+      <button class="choice" onclick="openPhoneHome()">⬅️ رجوع</button>
+      <h3 style="color:#f87171;">🕵️ الدارك ويب (مجهول)</h3>
+      <input id="dwAlias" placeholder="اسم مستعار (اختياري)">
+      <textarea id="dwContent" placeholder="اكتب رسالتك السرية..."></textarea>
+      <button class="btn" style="background:#7f1d1d;" onclick="postDarkWeb()">نشر كمجهول</button>
+      <div id="dwFeed"></div>
+    </div>
+
+    <div id="bagApp" class="hidden">
+      <button class="choice" onclick="openPhoneHome()">⬅️ رجوع</button>
+      <h3>🎒 حقيبتي وسياراتي</h3>
+      <div id="myInventoryList"></div>
+    </div>
+  </div>
+```html
+  <!-- 5. الأنظمة العامة (رادار/بادي كام، تقفيل أماكن حكومية، تغيير ملابس) -->
+  <div id="rpActionsScreen" class="card hidden">
+    <h2>📢 الأنظمة العامة والإشعارات</h2>
+    <div class="box">
+      <h4>🎥 الرادار والبادي كام</h4>
+      <div class="row">
+        <button class="choice" style="background:var(--green);" onclick="sendRPAction('رادار وبادي كام', 'تم لبس الرادار والبادي كام 🎥')">🟢 تم لبس رادار وبادي كام</button>
+        <button class="choice" style="background:var(--red);" onclick="sendRPAction('سحب رادار وبادي كام', 'تم سحب الرادار والبادي كام منه 🔴')">🔴 تم سحب الرادار والبادي كام</button>
+      </div>
+    </div>
+
+    <div class="box">
+      <h4>🏛️ تقفيل الأماكن الحكومية</h4>
+      <select id="govPlaceSelect" onchange="document.getElementById('customGovPlace').classList.toggle('hidden', this.value !== 'other')">
+        <option value="مركز الشرطة (القسم)">مركز الشرطة (القسم)</option>
+        <option value="المستشفى المركزي">المستشفى المركزي</option>
+        <option value="مبنى المحكمة">مبنى المحكمة</option>
+        <option value="other">مكان حكومي آخر (اكتب اسمه)...</option>
+      </select>
+      <input id="customGovPlace" class="hidden" placeholder="اكتب اسم المكان الحكومي هنا...">
+      <button class="btn" style="background:var(--amber);" onclick="closeGovPlace()">🔒 إعلان تقفيل المكان الحكومي</button>
+    </div>
+
+    <div class="box">
+      <h4>👕 تغيير الملابس</h4>
+      <button class="btn" onclick="sendRPAction('تغيير ملابس', 'قام بتغيير ملابسه بالكامل 👕')">👕 إرسال إشعار تغيير الملابس للعموم</button>
+    </div>
+
+    <div class="box">
+      <h4>📜 سجل الإشعارات العامة المباشر</h4>
+      <div id="rpFeedList"></div>
+    </div>
   </div>
 
-  <div class="card">
-   <div class="number">06 / CITIZENS</div>
-   <h3>بوابة المواطنين</h3>
-   <p>تقديم الطلبات، متابعة المعاملات والخدمات العامة.</p>
-   <span class="status">قريباً</span>
+  <!-- 6. المتجر العام ومعرض السيارات -->
+  <div id="shopScreen" class="card hidden">
+    <h2>🛒 المتجر ومعرض السيارات</h2>
+    <p>رصيدك البنكي الحالي: <strong id="shopBal" style="color:#4ade80;"></strong></p>
+
+    <div class="box">
+      <h3>🎒 المتجر العام</h3>
+      <div id="itemsShopList"></div>
+    </div>
+
+    <div class="box">
+      <h3>🏎️ معرض السيارات</h3>
+      <div id="carsShopList"></div>
+    </div>
   </div>
 
- </div>
-</section>
+  <!-- 7. نظام السرقات -->
+  <div id="robberyScreen" class="card hidden">
+    <h2 style="color:#f87171;">🔫 نظام السرقات (يرسل بلاغاً فورياً للشرطة)</h2>
+    <div class="box">
+      <label>1. اختر السرقة:</label>
+      <select id="robType">
+        <option value="سرقة بقالة">🏪 سرقة بقالة</option>
+        <option value="سرقة محل أسلحة">🔫 سرقة محل أسلحة</option>
+        <option value="سرقة محل مجوهرات">💎 سرقة محل مجوهرات</option>
+        <option value="سرقة بنك فليكا">🏦 سرقة بنك فليكا</option>
+        <option value="سرقة البنك المركزي">🏛️ سرقة البنك المركزي</option>
+      </select>
+      <label>2. رقم السارق (رقمك في السرقة):</label>
+      <input id="robNumber" placeholder="اكتب رقمك (مثال: 1 أو 205)">
+      <label>3. عدد الرهائن:</label>
+      <input id="robHostages" type="number" value="0" placeholder="كم عدد الرهائن؟">
+      <label>4. حالة الرهينة والحالة المفتوحة:</label>
+      <select id="robCondition">
+        <option value="يوجد رهينة">✅ يوجد رهينة</option>
+        <option value="لا يوجد رهينة - حالة مفتوحة">⚠️ لا يوجد رهينة (حالة مفتوحة)</option>
+      </select>
+      <button class="btn" style="background:var(--red);" onclick="startRobbery()">🚨 بدء السرقة وإرسال بلاغ للشرطة</button>
+    </div>
+    <div class="box">
+      <h4>🚨 السرقات النشطة حالياً</h4>
+      <div id="activeRobberiesList"></div>
+    </div>
+  </div>
 
-<section class="section" id="about">
- <h2>عن STONE CITY</h2>
- <div class="sub">
-  منظومة إدارية متكاملة لعالم الرول بلاي،
-  تجمع القطاعات الحكومية في منصة واحدة.
- </div>
-</section>
+  <!-- 8. نظام الشرطة -->
+  <div id="policeScreen" class="card hidden">
+    <h2>🚓 نظام الشرطة (MDT)</h2>
+    <div class="row">
+      <button class="choice active" onclick="toggleDuty()">🟢/🔴 تسجيل دخول/خروج</button>
+      <button class="choice" onclick="loadPoliceData()">🔄 تحديث البلاغات</button>
+    </div>
+    <div class="box">
+      <h4>🔍 بحث MDT برقم الهوية</h4>
+      <div class="row">
+        <input id="mdtSearchNid" placeholder="رقم الهوية (4 أرقام)">
+        <button class="choice active" style="max-width:90px;" onclick="searchMDT()">بحث</button>
+      </div>
+      <div id="mdtResult"></div>
+    </div>
+    <div class="box">
+      <h4>📝 إصدار مخالفة / تقرير / ملاحظات ميدان</h4>
+      <select id="polRecordType">
+        <option value="fine">مخالفة مرورية/جنائية</option>
+        <option value="report">تقرير ميداني / ملاحظات العسكر</option>
+      </select>
+      <input id="polTargetNid" placeholder="هوية المواطن (4 أرقام)">
+      <input id="polTitle" placeholder="عنوان المخالفة أو التقرير">
+      <input id="polAmount" type="number" placeholder="قيمة الغرامة ($)">
+      <textarea id="polDetails" placeholder="التفاصيل وملاحظات الميدان..."></textarea>
+      <button class="btn" onclick="submitPoliceRecord()">اعتماد وإرسال ✅</button>
+    </div>
+    <div class="box">
+      <h4>🗺️ خريطة مدينة GTA 5 والبلاغات والسرقات</h4>
+      <div id="gtaMap" class="gta-map" onclick="sendEmergencyPin(event, 'police')"></div>
+      <div id="policeCallsList"></div>
+    </div>
+    <div class="box">
+      <h4>🎖️ التوظيف والترقيات (مستجد -> جنرال)</h4>
+      <input id="promoteNid" placeholder="هوية العسكري (4 أرقام)">
+      <select id="promoteRank">
+        <option>مستجد</option><option>جندي</option><option>جندي أول</option><option>عريف</option>
+        <option>وكيل رقيب</option><option>رقيب</option><option>رقيب أول</option><option>رئيس رقباء</option>
+        <option>ملازم</option><option>ملازم أول</option><option>نقيب</option><option>رائد</option>
+        <option>مقدم</option><option>عقيد</option><option>عميد</option><option>لواء</option><option>فريق</option><option>جنرال</option>
+      </select>
+      <button class="btn" onclick="promoteOfficer()">ترقية وتعيين في الشرطة 🎖️</button>
+    </div>
+  </div>
 
-<footer>
- SC | STONE CITY<br>
- جميع الحقوق محفوظة © 2026
-</footer>
+  <!-- 9. نظام العدل -->
+  <div id="justiceScreen" class="card hidden">
+    <h2>⚖️ وزارة العدل</h2>
+    <button class="btn" onclick="toggleDuty()">🟢/🔴 تسجيل دخول/خروج القضاء</button>
+    <div class="box">
+      <h4>⚖️ حكم محكمة / رفع قضية / تقرير</h4>
+      <select id="jusType">
+        <option value="court_ruling">حكم محكمة</option>
+        <option value="lawsuit">رفع قضية</option>
+        <option value="report">تقرير قضائي</option>
+      </select>
+      <input id="jusTargetNid" placeholder="هوية المواطن (4 أرقام)">
+      <input id="jusTitle" placeholder="عنوان القضية أو الحكم">
+      <input id="jusAmount" type="number" placeholder="الغرامة المالية ($)">
+      <textarea id="jusDetails" placeholder="نص الحكم أو تفاصيل القضية..."></textarea>
+      <button class="btn" onclick="submitJusticeRecord()">حفظ في السجل القضائي ✅</button>
+    </div>
+    <div class="box">
+      <h4>💰 طلب قرض أو رخصة محاماة</h4>
+      <select id="reqType">
+        <option value="loan">طلب قرض بنكي</option>
+        <option value="lawyer_license">طلب رخصة محاماة</option>
+      </select>
+      <input id="reqAmount" type="number" placeholder="مبلغ القرض المطلوب (إن وجد)">
+      <input id="reqDetails" placeholder="السبب أو الضمانات">
+      <button class="btn" onclick="submitLoanOrLicense()">تقديم الطلب 📩</button>
+    </div>
+  </div>
 
-</body>
-</html>
+  <!-- 10. نظام الصحة -->
+  <div id="emsScreen" class="card hidden">
+    <h2>🚑 وزارة الصحة (EMS)</h2>
+    <button class="btn" onclick="toggleDuty()">🟢/🔴 تسجيل دخول/خروج الإسعاف</button>
+    <div class="box">
+      <h4>🩺 السجل الطبي والتقارير</h4>
+      <input id="emsPatientNid" placeholder="هوية المريض (4 أرقام)">
+      <input id="emsBlood" placeholder="فصيلة الدم (مثال: O+)">
+      <input id="emsDiag" placeholder="التشخيص / نوع الإصابة">
+      <textarea id="emsTreat" placeholder="العلاج والتقرير الطبي..."></textarea>
+      <button class="btn" onclick="submitMedical()">حفظ السجل الطبي ✅</button>
+    </div>
+  </div>
+
+  <!-- 11. لوحة الإدارة -->
+  <div id="adminScreen" class="card hidden">
+    <h2>🛡️ لوحة الإدارة العليا</h2>
+    <h3>طلبات الهوية المعلقة</h3>
+    <div id="pendingList"></div>
+    <h3>الرقابة وحذف الرسائل البذيئة</h3>
+    <div id="modFeed"></div>
+  </div>
+
+<script>
+  // ⚠️ استبدل السطرين التاليين ببيانات مشروعك من Supabase (Settings -> API)
+  const SUPABASE_URL = 'ضع_هنا_PROJECT_URL';
+  const SUPABASE_KEY = 'ضع_هنا_ANON_PUBLIC_KEY';
+  const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  let isLogin = true, user = null, city = 'لوس سانتوس', gender = 'ذكر', twAcc = null;
+  let peer = null, currentCall = null, incomingCallObj = null, ringtoneInterval = null;
+
+  const SHOP_ITEMS = [
+    { name: 'راديو 📻', price: 25 },
+    { name: 'جوال 📱', price: 100 },
+    { name: 'فاتح أقفال 🔓', price: 1000 },
+    { name: 'فأس 🪓', price: 25 },
+    { name: 'سكين 🔪', price: 250 },
+    { name: 'كشاف 🔦', price: 25 },
+    { name: 'عدة تصليح 🔧', price: 60 },
+    { name: 'بنزين ⛽', price: 30 }
+  ];
+
+  const SHOP_CARS = [
+    { name: 'سوبر اكس 🏎️', price: 1000000 },
+    { name: 'متس اكس 🚙', price: 250000 },
+    { name: 'دباب اكس 🏍️', price: 50000 },
+    { name: 'هلي اكس 🚁', price: 2500000 },
+    { name: 'رام اكس 🛻', price: 750000 }
+  ];
+
+  function showScreen(id) {
+    ['authScreen','idScreen','pendingScreen','phoneScreen','rpActionsScreen','shopScreen','robberyScreen','policeScreen','justiceScreen','emsScreen','adminScreen'].forEach(s => {
+      document.getElementById(s).classList.add('hidden');
+    });
+    document.getElementById(id).classList.remove('hidden');
+    if (id === 'rpActionsScreen') loadRPFeed();
+    if (id === 'shopScreen') renderShop();
+    if (id === 'robberyScreen') loadRobberies();
+    if (id === 'policeScreen') loadPoliceData();
+  }
+
+  function toggleAuthMode() {
+    isLogin = !isLogin;
+    document.getElementById('authTitle').innerText = isLogin ? 'تسجيل الدخول - STONE CITY' : 'حساب جديد - الخطوة 1';
+  }
+
+  function pick(btn, type, val) {
+    if (type === 'city') city = val; else gender = val;
+    btn.parentElement.querySelectorAll('.choice').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  async function handleAuth() {
+    const username = document.getElementById('uName').value.trim();
